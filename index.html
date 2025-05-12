@@ -36,6 +36,22 @@
     }
     .team {
       margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .blue {
+      background-color: #0057a3;
+      border: 2px solid #004080;
+    }
+    .blue h2 {
+      color: #00c3ff;
+    }
+    .red {
+      background-color: #b80000;
+      border: 2px solid #8e0000;
+    }
+    .red h2 {
+      color: #ff4d4d;
     }
     .player {
       margin: 4px 0;
@@ -79,13 +95,13 @@
       embaralhar(lanes);
       const lanes2 = [...lanes];
 
-      let resultado = '<div class="team"><h2>Time Blue</h2>';
+      let resultado = '<div class="team blue"><h2>Time Blue</h2>';
       time1.forEach((jogador, i) => {
         resultado += `<div class="player">${jogador} – ${lanes1[i]}</div>`;
       });
       resultado += '</div>';
 
-      resultado += '<div class="team"><h2>Time Red</h2>';
+      resultado += '<div class="team red"><h2>Time Red</h2>';
       time2.forEach((jogador, i) => {
         resultado += `<div class="player">${jogador} – ${lanes2[i]}</div>`;
       });
@@ -96,3 +112,4 @@
   </script>
 </body>
 </html>
+
