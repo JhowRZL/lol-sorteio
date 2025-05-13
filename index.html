@@ -44,10 +44,33 @@
     button:hover {
       background: linear-gradient(to right, #008ecc, #004d80);
     }
+    .teams {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .team {
+      width: 45%;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+    }
+    .team h2 {
+      text-align: center;
+    }
+    .blue h2 {
+      color: #00aaff;
+    }
+    .red h2 {
+      color: #ff4c4c;
+    }
     .map-container {
       position: relative;
       max-width: 800px;
-      margin-top: 20px;
+      margin-top: 40px;
     }
     .map {
       width: 100%;
@@ -79,8 +102,20 @@
   <textarea id="players"></textarea>
   <br>
   <button onclick="sortearTimes()">Sortear Times e Lanes</button>
+
+  <div class="teams" id="resultado-times" style="display:none;">
+    <div class="team blue">
+      <h2>🔵 Time Azul</h2>
+      <ul id="lista-blue"></ul>
+    </div>
+    <div class="team red">
+      <h2>🔴 Time Vermelho</h2>
+      <ul id="lista-red"></ul>
+    </div>
+  </div>
+
   <div class="map-container" id="mapa-container" style="display:none;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Summoners_Rift_TopDown.png" class="map" alt="Mapa do Summoner's Rift">
+    <img src="https://raw.githubusercontent.com/henriqueweiand/assets/main/summoners-rift.jpg" class="map" alt="Mapa do Summoner's Rift">
     <div id="positions"></div>
   </div>
 
@@ -108,14 +143,26 @@
       const time1 = nomes.slice(0, 5);
       const time2 = nomes.slice(5);
 
+      // Mostrar listas de times
+      const listaBlue = document.getElementById('lista-blue');
+      const listaRed = document.getElementById('lista-red');
+      listaBlue.innerHTML = '';
+      listaRed.innerHTML = '';
+
+      lanes.forEach((lane, i) => {
+        listaBlue.innerHTML += `<li><strong>${lane}:</strong> ${time1[i]}</li>`;
+        listaRed.innerHTML += `<li><strong>${lane}:</strong> ${time2[i]}</li>`;
+      });
+
+      document.getElementById('resultado-times').style.display = 'flex';
+
       const positionsDiv = document.getElementById('positions');
       positionsDiv.innerHTML = '';
-
       const posicoes = ['top', 'jungle', 'mid', 'adc', 'support'];
 
       posicoes.forEach((pos, i) => {
-        positionsDiv.innerHTML += `<div class="position top-blue ${pos}-blue">${time1[i]}</div>`;
-        positionsDiv.innerHTML += `<div class="position top-red ${pos}-red">${time2[i]}</div>`;
+        positionsDiv.innerHTML += `<div class="position ${pos}-blue">${time1[i]}</div>`;
+        positionsDiv.innerHTML += `<div class="position ${pos}-red">${time2[i]}</div>`;
       });
 
       document.getElementById('mapa-container').style.display = 'block';
