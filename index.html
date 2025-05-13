@@ -44,80 +44,58 @@
     button:hover {
       background: linear-gradient(to right, #008ecc, #004d80);
     }
-    .teams {
+    .teams-container {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       width: 100%;
-      max-width: 800px;
-      margin-top: 20px;
-      text-align: left;
+      max-width: 900px;
+      gap: 20px;
     }
     .team {
-      width: 45%;
-      padding: 10px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 8px;
+      flex: 1;
+      margin: 0 10px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
-    .team h2 {
-      text-align: center;
+    .blue {
+      background-color: rgba(0, 87, 163, 0.9);
+      border: 2px solid #00c3ff;
     }
     .blue h2 {
-      color: #00aaff;
+      color: #00c3ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .red {
+      background-color: rgba(184, 0, 0, 0.9);
+      border: 2px solid #ff4d4d;
     }
     .red h2 {
-      color: #ff4c4c;
+      color: #ff4d4d;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .map-container {
-      position: relative;
-      max-width: 800px;
-      margin-top: 40px;
+    .player {
+      margin: 6px 0;
+      font-size: 18px;
     }
-    .map {
-      width: 100%;
-      border-radius: 12px;
+    .logo {
+      width: 80px;
+      margin-bottom: 10px;
     }
-    .position {
-      position: absolute;
-      color: white;
-      font-weight: bold;
-      text-shadow: 1px 1px 2px black;
-    }
-    .top-blue { top: 10%; left: 10%; }
-    .jungle-blue { top: 30%; left: 20%; }
-    .mid-blue { top: 45%; left: 45%; }
-    .adc-blue { bottom: 20%; right: 15%; }
-    .support-blue { bottom: 10%; right: 5%; }
-
-    .top-red { bottom: 10%; right: 10%; }
-    .jungle-red { bottom: 30%; right: 20%; }
-    .mid-red { top: 45%; left: 50%; }
-    .adc-red { top: 20%; left: 15%; }
-    .support-red { top: 10%; left: 5%; }
   </style>
 </head>
 <body>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/League_of_Legends_2019_vector.svg" class="logo" alt="League of Legends" style="width: 80px; margin-bottom: 10px;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/League_of_Legends_2019_vector.svg" class="logo" alt="League of Legends">
   <h1>Sorteador de Times - League of Legends</h1>
   <p>Insira os 10 nomes (um por linha):</p>
   <textarea id="players"></textarea>
   <br>
   <button onclick="sortearTimes()">Sortear Times e Lanes</button>
-
-  <div class="teams" id="resultado-times" style="display:none;">
-    <div class="team blue">
-      <h2>🔵 Time Azul</h2>
-      <ul id="lista-blue"></ul>
-    </div>
-    <div class="team red">
-      <h2>🔴 Time Vermelho</h2>
-      <ul id="lista-red"></ul>
-    </div>
-  </div>
-
-  <div class="map-container" id="mapa-container" style="display:none;">
-    <img src="https://raw.githubusercontent.com/henriqueweiand/assets/main/summoners-rift.jpg" class="map" alt="Mapa do Summoner's Rift">
-    <div id="positions"></div>
-  </div>
+  <div class="teams-container" id="resultado"></div>
 
   <script>
     const lanes = ['Top', 'Jungle', 'Mid', 'ADC', 'Suporte'];
@@ -143,29 +121,21 @@
       const time1 = nomes.slice(0, 5);
       const time2 = nomes.slice(5);
 
-      // Mostrar listas de times
-      const listaBlue = document.getElementById('lista-blue');
-      const listaRed = document.getElementById('lista-red');
-      listaBlue.innerHTML = '';
-      listaRed.innerHTML = '';
+      let resultado = '';
 
+      resultado += '<div class="team blue"><h2>🔵 Time Blue</h2>';
       lanes.forEach((lane, i) => {
-        listaBlue.innerHTML += `<li><strong>${lane}:</strong> ${time1[i]}</li>`;
-        listaRed.innerHTML += `<li><strong>${lane}:</strong> ${time2[i]}</li>`;
+        resultado += `<div class="player">${lane} – ${time1[i]}</div>`;
       });
+      resultado += '</div>';
 
-      document.getElementById('resultado-times').style.display = 'flex';
-
-      const positionsDiv = document.getElementById('positions');
-      positionsDiv.innerHTML = '';
-      const posicoes = ['top', 'jungle', 'mid', 'adc', 'support'];
-
-      posicoes.forEach((pos, i) => {
-        positionsDiv.innerHTML += `<div class="position ${pos}-blue">${time1[i]}</div>`;
-        positionsDiv.innerHTML += `<div class="position ${pos}-red">${time2[i]}</div>`;
+      resultado += '<div class="team red"><h2>🔴 Time Red</h2>';
+      lanes.forEach((lane, i) => {
+        resultado += `<div class="player">${lane} – ${time2[i]}</div>`;
       });
+      resultado += '</div>';
 
-      document.getElementById('mapa-container').style.display = 'block';
+      document.getElementById('resultado').innerHTML = resultado;
     }
   </script>
 </body>
