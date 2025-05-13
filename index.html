@@ -38,7 +38,7 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-bottom: 20px;
+      margin: 10px;
       transition: background 0.3s ease;
     }
     button:hover {
@@ -90,6 +90,7 @@
   <textarea id="players"></textarea>
   <br>
   <button onclick="sortearTimes()">Sortear Times e Lanes</button>
+  <button onclick="copiarResultado()">📋 Copiar Sorteio</button>
   <div class="teams-container" id="resultado"></div>
 
   <script>
@@ -132,6 +133,17 @@
 
       document.getElementById('resultado').innerHTML = resultado;
     }
+
+    function copiarResultado() {
+      const resultado = document.getElementById('resultado').innerText;
+      navigator.clipboard.writeText(resultado).then(() => {
+        alert('Sorteio copiado com sucesso!');
+      }, err => {
+        alert('Erro ao copiar: ' + err);
+      });
+    }
   </script>
+</body>
+</html>
 </body>
 </html>
