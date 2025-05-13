@@ -82,6 +82,9 @@
       margin: 6px 0;
       font-size: 18px;
     }
+    #copyButton {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -90,7 +93,7 @@
   <textarea id="players"></textarea>
   <br>
   <button onclick="sortearTimes()">Sortear Times e Lanes</button>
-  <button onclick="copiarResultado()">📋 Copiar Sorteio</button>
+  <button id="copyButton" onclick="copiarResultado()">📋 Copiar Sorteio</button>
   <div class="teams-container" id="resultado"></div>
 
   <script>
@@ -132,6 +135,7 @@
       resultado += '</div>';
 
       document.getElementById('resultado').innerHTML = resultado;
+      document.getElementById('copyButton').style.display = 'inline-block';
     }
 
     function copiarResultado() {
@@ -143,7 +147,5 @@
       });
     }
   </script>
-</body>
-</html>
 </body>
 </html>
