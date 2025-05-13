@@ -4,74 +4,85 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sorteio de Times - LoL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #1c1c1c;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
       color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      min-height: 100vh;
     }
     h1 {
-      color: #00aaff;
+      color: #f0c420;
+      text-shadow: 2px 2px #000;
     }
     textarea {
-      width: 300px;
+      width: 320px;
       height: 150px;
       padding: 10px;
       font-size: 16px;
+      border-radius: 8px;
+      border: none;
       margin-bottom: 10px;
       resize: none;
     }
     button {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #00aaff;
+      background: linear-gradient(to right, #00aaff, #0057a3);
       color: white;
       border: none;
+      border-radius: 6px;
       cursor: pointer;
       margin-bottom: 20px;
+      transition: background 0.3s ease;
     }
-    .teams-container {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
+    button:hover {
+      background: linear-gradient(to right, #008ecc, #004d80);
+    }
+    .map-container {
+      position: relative;
       max-width: 800px;
+      margin-top: 20px;
     }
-    .team {
-      flex: 1;
-      margin: 0 10px;
-      padding: 10px;
-      border-radius: 8px;
+    .map {
+      width: 100%;
+      border-radius: 12px;
     }
-    .blue {
-      background-color: #0057a3;
-      border: 2px solid #004080;
+    .position {
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px black;
     }
-    .blue h2 {
-      color: #00c3ff;
-    }
-    .red {
-      background-color: #b80000;
-      border: 2px solid #8e0000;
-    }
-    .red h2 {
-      color: #ff4d4d;
-    }
-    .player {
-      margin: 4px 0;
-    }
+    .top-blue { top: 10%; left: 10%; }
+    .jungle-blue { top: 30%; left: 20%; }
+    .mid-blue { top: 45%; left: 45%; }
+    .adc-blue { bottom: 20%; right: 15%; }
+    .support-blue { bottom: 10%; right: 5%; }
+
+    .top-red { bottom: 10%; right: 10%; }
+    .jungle-red { bottom: 30%; right: 20%; }
+    .mid-red { top: 45%; left: 50%; }
+    .adc-red { top: 20%; left: 15%; }
+    .support-red { top: 10%; left: 5%; }
   </style>
 </head>
 <body>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/League_of_Legends_2019_vector.svg" class="logo" alt="League of Legends" style="width: 80px; margin-bottom: 10px;">
   <h1>Sorteador de Times - League of Legends</h1>
   <p>Insira os 10 nomes (um por linha):</p>
   <textarea id="players"></textarea>
   <br>
   <button onclick="sortearTimes()">Sortear Times e Lanes</button>
-  <div class="teams-container" id="resultado"></div>
+  <div class="map-container" id="mapa-container" style="display:none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Summoners_Rift_TopDown.png" class="map" alt="Mapa do Summoner's Rift">
+    <div id="positions"></div>
+  </div>
 
   <script>
     const lanes = ['Top', 'Jungle', 'Mid', 'ADC', 'Suporte'];
@@ -97,21 +108,17 @@
       const time1 = nomes.slice(0, 5);
       const time2 = nomes.slice(5);
 
-      let resultado = '';
+      const positionsDiv = document.getElementById('positions');
+      positionsDiv.innerHTML = '';
 
-      resultado += '<div class="team blue"><h2>Time Blue</h2>';
-      lanes.forEach((lane, i) => {
-        resultado += `<div class="player">${lane} – ${time1[i]}</div>`;
+      const posicoes = ['top', 'jungle', 'mid', 'adc', 'support'];
+
+      posicoes.forEach((pos, i) => {
+        positionsDiv.innerHTML += `<div class="position top-blue ${pos}-blue">${time1[i]}</div>`;
+        positionsDiv.innerHTML += `<div class="position top-red ${pos}-red">${time2[i]}</div>`;
       });
-      resultado += '</div>';
 
-      resultado += '<div class="team red"><h2>Time Red</h2>';
-      lanes.forEach((lane, i) => {
-        resultado += `<div class="player">${lane} – ${time2[i]}</div>`;
-      });
-      resultado += '</div>';
-
-      document.getElementById('resultado').innerHTML = resultado;
+      document.getElementById('mapa-container').style.display = 'block';
     }
   </script>
 </body>
